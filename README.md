@@ -2,4 +2,4 @@
 Android Arcade Game
 
 ## Table of Contents
-+ [Environment Setup](EnvironmentSetup.md)
++ [Setup](setup.md)
