@@ -2,7 +2,7 @@
 [Return to README](README.md)
 Setup instructions for Windows 7 x64.
 
-## Android SDK
+## Android SDK [SKIP THIS]
 Download [Android Studio](https://developer.android.com/studio/index.html#downloads).
 Follow the instructions presented to install. Note the path of your Android SDK, it should be something 
 like `C:\Users\[USERNAME]\AppData\Local\Android\sdk`.
