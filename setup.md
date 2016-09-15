@@ -2,6 +2,14 @@
 [Return to README](README.md)  
 Setup instructions for Windows 7 x64.
 
+## Table of Contents
++ [Eclipse](#eclipse)
++ [Android ADT for Eclipse](#android-adt-for-eclipse)
++ [Android SDKs](#android-sdks)
++ [Android Emulator](#android-emulator)
++ [Import Project](#import-project)
++ [Running the Project](#running-the-project)
+
 ## Eclipse
 Download [Eclipse](https://eclipse.org/downloads/). 
 Follow the instructions presented to install.
