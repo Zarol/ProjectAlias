@@ -28,7 +28,7 @@ have a previous SDK installed."
 
 If you already have a previous SDK installed:  
 Go to `Window -> Android SDK Manager`. Download the suggested packages, however be sure to have
-the SDK Platform and Google APIs selected for Android 4.4.2 (API 19).
+the SDK Platform and Google APIs selected for Android 4.4.2 (API 19) and Android SDK Build tools version 23.0.3.
 
 ## Android Emulator
 Go to `Window -> Android Virtual Device Manager`. Create a new AVD with the following profile:
@@ -36,9 +36,10 @@ Target Android 4.4.2, CPU/ABI Intel Atom (x86). Everything else is optional, I p
 device, with no skin, 768MB of RAM, and using host GPU for emulation.
 
 ## Import Project
-Within Eclipse, go to `File -> Import -> Gradle -> Gradle Project`. Click browse and navigate to the
-root folder of this project and click `Finish`. Gradle will download the required dependencies which
-might take a couple of minutes.
+Clone the project and create a file within the root directory called `local.properties`. Within the file
+write `sdk.dir=%PATH_TO_ANDROID_SDK%` and save the file. Within Eclipse, go to 
+`File -> Import -> Gradle -> Gradle Project`. Click browse and navigate to the root folder of this project 
+and click `Finish`. Gradle will download the required dependencies which might take a couple of minutes.
 
 ## Running the Project
 ### Desktop
