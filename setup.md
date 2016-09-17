@@ -45,5 +45,10 @@ and click `Finish`. Gradle will download the required dependencies which might t
 ### Desktop
 Right-click the desktop project folder, `Run As -> Java Application`. Select DesktopLauncher.java.
 
+First Time Running:
+The project will fail the first time running, after failing, go to `Run -> Run Configurations -> DesktopLauncher`.
+Navigate to the `Arguments` tab and under `Working directory` select `Other` and set the path to
+`%PATH_TO_PROJECT%\ProjectAlias\android\assets`. Click `Apply` and run the project again.
+
 ### Android
 Run your android device. Right-click the android project folder, `Run As -> Android Application`.
