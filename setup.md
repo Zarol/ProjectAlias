@@ -57,3 +57,8 @@ Navigate to the `Arguments` tab and under `Working directory` select `Other` and
 
 ### Android
 Run your android device. Right-click the android project folder, `Run As -> Android Application`.
+
+First Time Running:
+Right-click ProjectAlias-android from the Package Explorer and click `Properties`. Click `Java Build Path` and then
+the `Order and Export` tab. Ensure that `Project and External Dependencies`, `Android Private Libraries`, and 
+`Android Dependencies` are checked. Click `Apply` and run the project again.
