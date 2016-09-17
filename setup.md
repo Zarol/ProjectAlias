@@ -21,6 +21,12 @@ Within the Add Repository dialog enter "ADT Plugin" for name and the following U
 click `Next` until `Finish`. When the installation completes, restart Eclipse.
 
 ## Android SDKs
+If you do not have an SDK:  
+A welcome screen will appear when Eclipse has restarted, select "Install new SDK" and "Install the latest...." 
+Click `Next` and follow the on screen instructions to finish the installation. Continue to "If you already
+have a previous SDK installed."
+
+If you already have a previous SDK installed:  
 Go to `Window -> Android SDK Manager`. Download the suggested packages, however be sure to have
 the SDK Platform and Google APIs selected for Android 4.4.2 (API 19).
 
