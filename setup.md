@@ -35,6 +35,11 @@ Go to `Window -> Android Virtual Device Manager`. Create a new AVD with the foll
 Target Android 4.4.2, CPU/ABI Intel Atom (x86). Everything else is optional, I personally use the Nexus 5 as my
 device, with no skin, 768MB of RAM, and using host GPU for emulation.
 
+If you are having problems with "HAXM" in running your emulator, go to the Android SDK Manager and under Extras
+install the `Intel x86 Emulator Accelerator (HAXM installer)`. Next go to the directory of your Android SDK,
+under `extras\intel\Hardware_Accelerated_Execution_Manager` run `intelhaxm-android.exe` and follow the instructions.
+Your emulator should now work.
+
 ## Import Project
 Clone the project and create a file within the root directory called `local.properties`. Within the file
 write `sdk.dir=%PATH_TO_ANDROID_SDK%` and save the file. Within Eclipse, go to 
