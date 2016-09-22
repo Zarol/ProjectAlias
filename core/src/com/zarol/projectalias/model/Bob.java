@@ -8,7 +8,7 @@ public class Bob {
 		IDLE, WALKING, JUMPING, DYING
 	}
 
-	public static final float SPEED = 2f;
+	public static final float SPEED = 4f;
 	public static final float JUMP_VELOCITY = 1f;
 	public static final float SIZE = 0.5f;
 
@@ -23,6 +23,10 @@ public class Bob {
 		this.position = position;
 		this.bounds.height = SIZE;
 		this.bounds.width = SIZE;
+	}
+
+	public void update(float delta) {
+		position.add(velocity.cpy().scl(delta));
 	}
 
 	public Vector2 getPosition() {
@@ -45,7 +49,15 @@ public class Bob {
 		return state;
 	}
 
+	public void setState(State state) {
+		this.state = state;
+	}
+
 	public boolean isFacingLeft() {
 		return facingLeft;
+	}
+
+	public void setFacingLeft(boolean facingLeft) {
+		this.facingLeft = facingLeft;
 	}
 }
