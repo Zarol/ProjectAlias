@@ -3,8 +3,14 @@ apply plugin: "java"
 sourceCompatibility = 1.6
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.mainClassName = "com.zarol.projectalias.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../android/assets");
+project.ext {
+	mainClassName = "com.zarol.projectalias.desktop.DesktopLauncher"
+	assetsDir = new File("../android/assets");
+	androidDir = project(":android").projectDir.absolutePath
+	texturePackerInputPath = androidDir + "/assets/images"
+	texturePackerOutputPath = androidDir + "/assets/images/textures"
+	texturePacker = [texturePackerInputPath, texturePackerOutputPath, "textures"]
+}
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
@@ -12,6 +18,14 @@ task run(dependsOn: classes, type: JavaExec) {
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
+}
+
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+task texturePacker << {
+	if (project.ext.has('texturePacker')) {
+		logger.info "Calling TexturePacker: " + texturePacker
+		TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
+	}
 }
 
 task dist(type: Jar) {
