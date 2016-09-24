@@ -22,16 +22,18 @@ public class Bob {
 
 	public Bob(Vector2 position) {
 		this.position = position;
+		this.bounds.x = this.position.x;
+		this.bounds.y = this.position.y;
 		this.bounds.height = SIZE;
 		this.bounds.width = SIZE;
 	}
 
 	public void update(float delta) {
 		stateTime += delta;
-		velocityFrame.set(velocity).scl(delta);
-		position.add(velocityFrame);
-		bounds.x = position.x;
-		bounds.y = position.y;
+		// velocityFrame.set(velocity).scl(delta);
+		// position.add(velocityFrame);
+		// bounds.x = position.x;
+		// bounds.y = position.y;
 	}
 
 	public Vector2 getPosition() {

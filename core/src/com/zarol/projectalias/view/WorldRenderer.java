@@ -73,8 +73,11 @@ public class WorldRenderer {
 
 	public void render() {
 		spriteBatch.begin();
+		drawBlocks();
 		drawBob();
 		spriteBatch.end();
+
+		drawCollisionBlocks();
 
 		if (debug) {
 			drawDebug();
@@ -110,9 +113,8 @@ public class WorldRenderer {
 		bobFallRight.flip(true, false);
 	}
 
-	@SuppressWarnings("unused")
 	private void drawBlocks() {
-		for (Block block : world.getBlocks()) {
+		for (Block block : world.getDrawableBlocks((int) CAMERA_WIDTH, (int) CAMERA_HEIGHT)) {
 			spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
 					Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
@@ -135,13 +137,24 @@ public class WorldRenderer {
 				Bob.SIZE * ppuY);
 	}
 
+	private void drawCollisionBlocks() {
+		debugRenderer.setProjectionMatrix(cam.combined);
+		debugRenderer.begin(ShapeType.Filled);
+		debugRenderer.setColor(new Color(1, 1, 1, 1));
+
+		for (Rectangle rectangle : world.getCollionRectangles()) {
+			debugRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+		}
+		debugRenderer.end();
+	}
+
 	private void drawDebug() {
 		debugRenderer.setProjectionMatrix(cam.combined);
 		debugRenderer.begin(ShapeType.Line);
 
 		// Render Blocks
 		{
-			for (Block block : world.getBlocks()) {
+			for (Block block : world.getDrawableBlocks((int) CAMERA_WIDTH, (int) CAMERA_HEIGHT)) {
 				Rectangle rect = block.getBounds();
 				float x1 = block.getPosition().x + rect.x;
 				float y1 = block.getPosition().y + rect.y;
