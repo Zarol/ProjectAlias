@@ -6,14 +6,14 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.zarol.projectalias.controller.WorldController;
+import com.zarol.projectalias.controller.BobController;
 import com.zarol.projectalias.model.World;
 import com.zarol.projectalias.view.WorldRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
 	private World world;
 	private WorldRenderer renderer;
-	private WorldController controller;
+	private BobController controller;
 
 	private int width, height;
 
@@ -21,7 +21,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public void show() {
 		world = new World();
 		renderer = new WorldRenderer(world, false);
-		controller = new WorldController(world);
+		controller = new BobController(world);
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -93,6 +93,9 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		if (keycode == Keys.X) {
 			controller.fireReleased();
+		}
+		if (keycode == Keys.D) {
+			renderer.setDebug(!renderer.isDebug());
 		}
 		return true;
 	}
