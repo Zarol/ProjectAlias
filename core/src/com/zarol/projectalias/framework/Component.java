@@ -1,12 +1,10 @@
-package com.zarol.projectalias.component;
-
-import com.zarol.projectalias.entity.Entity;
+package com.zarol.projectalias.framework;
 
 /**
  * Defines a state and partial functionality for an Entity.
- * @see Entity
+ *
  * @author Zarol
- * Created on 9/26/2016
+ * @see Entity
  */
 public abstract class Component {
 	private boolean isActive = true;
@@ -14,6 +12,7 @@ public abstract class Component {
 
 	/**
 	 * The current active state of the Component.
+	 *
 	 * @return True if the Component will be updated, false otherwise.
 	 */
 	public final boolean isActive() {
@@ -22,6 +21,7 @@ public abstract class Component {
 
 	/**
 	 * Returns the Entity this Component is attached to.
+	 *
 	 * @return The Entity this Component is attached to.
 	 */
 	public final Entity getEntity() {
@@ -30,6 +30,7 @@ public abstract class Component {
 
 	/**
 	 * Sets the Entity this Component is attached to.
+	 *
 	 * @param entity The Entity this Component is attached to.
 	 */
 	public final void setEntity(Entity entity) {
@@ -51,6 +52,7 @@ public abstract class Component {
 
 	/**
 	 * Component update logic.
+	 *
 	 * @param delta The Time that has passed since the last update.
 	 */
 	@SuppressWarnings("unused")

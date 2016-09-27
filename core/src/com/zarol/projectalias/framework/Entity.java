@@ -1,6 +1,4 @@
-package com.zarol.projectalias.entity;
-
-import com.zarol.projectalias.component.Component;
+package com.zarol.projectalias.framework;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +8,9 @@ import java.util.Map;
 /**
  * Provides functionality and state for an Entity composed of Components.
  * An Entity may only have one type of each Component attached.
- * @see Component
+ *
  * @author Zarol
- * Created on 9/26/2016
+ * @see Component
  */
 public class Entity {
 	private boolean isInitialized = false;
@@ -24,6 +22,7 @@ public class Entity {
 
 	/**
 	 * The current active state of the Entity.
+	 *
 	 * @return True if the Entity will be updated, false otherwise.
 	 */
 	public boolean isActive() {
@@ -32,6 +31,7 @@ public class Entity {
 
 	/**
 	 * Sets the Entity to be active (updating) or inactive (non-updating).
+	 *
 	 * @param isActive True to set the Entity active, false otherwise.
 	 */
 	public void setActive(boolean isActive) {
@@ -40,8 +40,9 @@ public class Entity {
 
 	/**
 	 * Determines if the Entity is composed of a given Component.
+	 *
 	 * @param componentClass The class of the Component to check.
-	 * @param <T> The type of Component.
+	 * @param <T>            The type of Component.
 	 * @return True if the Component of type T is attached to the Entity, false otherwise.
 	 */
 	public <T extends Component> boolean has(Class<T> componentClass) {
@@ -50,8 +51,9 @@ public class Entity {
 
 	/**
 	 * Returns the Component if it attached to the Entity.
+	 *
 	 * @param componentClass The class of the Component to get.
-	 * @param <T> The type of Component.
+	 * @param <T>            The type of Component.
 	 * @return The Component attached to the Entity of type T.
 	 */
 	@SuppressWarnings("unchecked")
@@ -65,6 +67,7 @@ public class Entity {
 
 	/**
 	 * Attaches a Component to the Entity.
+	 *
 	 * @param component The Component to attach.
 	 */
 	public void attach(Component component) {
@@ -81,8 +84,9 @@ public class Entity {
 
 	/**
 	 * Detaches a Component of type T from the Entity if it exists.
+	 *
 	 * @param componentClass The class of the Component to detach.
-	 * @param <T> The type of Component.
+	 * @param <T>            The type of Component.
 	 */
 	public <T extends Component> void detach(Class<T> componentClass) {
 		if (has(componentClass) && !componentsToRemove.contains(componentClass)) {
@@ -92,6 +96,7 @@ public class Entity {
 
 	/**
 	 * If the Component of the same type already exists, remove the existing Component and add the new Component.
+	 *
 	 * @param component The new Component to replace the existing Component.
 	 */
 	public void replace(Component component) {
@@ -128,6 +133,7 @@ public class Entity {
 
 	/**
 	 * Updates all attached Components. Removes all detached Components. Attaches newly attached Components.
+	 *
 	 * @param delta The Time that has passed since the last update.
 	 */
 	public void update(float delta) {
@@ -146,8 +152,9 @@ public class Entity {
 
 	/**
 	 * Removes the Component from the Entity entirely after cleaning up the Component.
+	 *
 	 * @param componentClass The class of the Component to remove.
-	 * @param <T> The type of Component.
+	 * @param <T>            The type of Component.
 	 */
 	private <T extends Component> void remove(Class<T> componentClass) {
 		if (!has(componentClass)) {
