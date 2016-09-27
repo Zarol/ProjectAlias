@@ -118,6 +118,9 @@ public class GameScreen implements Screen, InputProcessor {
 		if (screenX > width / 2 && screenY > height / 2) {
 			controller.rightPressed();
 		}
+		if (screenY < height / 2) {
+			controller.jumpPressed();
+		}
 		return true;
 	}
 
@@ -132,6 +135,9 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		if (screenX > width / 2 && screenY > height / 2) {
 			controller.rightReleased();
+		}
+		if (screenY < height / 2) {
+			controller.jumpReleased();
 		}
 		return true;
 	}
