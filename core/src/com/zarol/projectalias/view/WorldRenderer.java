@@ -22,7 +22,7 @@ public class WorldRenderer {
 	private World world;
 	private OrthographicCamera cam;
 
-	ShapeRenderer debugRenderer = new ShapeRenderer();
+	private ShapeRenderer debugRenderer = new ShapeRenderer();
 
 	private SpriteBatch spriteBatch;
 	private boolean debug = false;
@@ -49,7 +49,8 @@ public class WorldRenderer {
 	public WorldRenderer(World world, boolean debug) {
 		this.world = world;
 		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
+//		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
+		this.cam.position.set(world.getBob().getPosition().x, world.getBob().getPosition().y, 0);
 		this.cam.update();
 		this.debug = debug;
 		spriteBatch = new SpriteBatch();
@@ -72,6 +73,9 @@ public class WorldRenderer {
 	}
 
 	public void render() {
+		cam.position.set(world.getBob().getPosition().x, world.getBob().getPosition().y, 0);
+		cam.update();
+		spriteBatch.setProjectionMatrix(cam.combined);
 		spriteBatch.begin();
 		drawBlocks();
 		drawBob();
@@ -115,8 +119,9 @@ public class WorldRenderer {
 
 	private void drawBlocks() {
 		for (Block block : world.getDrawableBlocks((int) CAMERA_WIDTH, (int) CAMERA_HEIGHT)) {
-			spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
-					Block.SIZE * ppuX, Block.SIZE * ppuY);
+//			spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY,
+//					Block.SIZE * ppuX, Block.SIZE * ppuY);
+			spriteBatch.draw(blockTexture, block.getPosition().x, block.getPosition().y, Block.SIZE, Block.SIZE);
 		}
 	}
 
@@ -133,8 +138,9 @@ public class WorldRenderer {
 				bobFrame = bob.isFacingLeft() ? bobFallLeft : bobFallRight;
 			}
 		}
-		spriteBatch.draw(bobFrame, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Bob.SIZE * ppuX,
-				Bob.SIZE * ppuY);
+//		spriteBatch.draw(bobFrame, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Bob.SIZE * ppuX,
+//				Bob.SIZE * ppuY);
+		spriteBatch.draw(bobFrame, bob.getPosition().x, bob.getPosition().y, Bob.SIZE, Bob.SIZE);
 	}
 
 	private void drawCollisionBlocks() {
@@ -156,10 +162,8 @@ public class WorldRenderer {
 		{
 			for (Block block : world.getDrawableBlocks((int) CAMERA_WIDTH, (int) CAMERA_HEIGHT)) {
 				Rectangle rect = block.getBounds();
-				float x1 = block.getPosition().x + rect.x;
-				float y1 = block.getPosition().y + rect.y;
 				debugRenderer.setColor(new Color(1, 0, 0, 1));
-				debugRenderer.rect(x1, y1, rect.width, rect.height);
+				debugRenderer.rect(rect.x, rect.y, rect.width, rect.height);
 			}
 		}
 
