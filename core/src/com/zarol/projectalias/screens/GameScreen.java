@@ -6,22 +6,27 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.zarol.projectalias.controller.BobController;
-import com.zarol.projectalias.model.World;
+import com.zarol.projectalias.events.KeyDownEvent;
+import com.zarol.projectalias.events.KeyUpEvent;
+import com.zarol.projectalias.events.TouchDownEvent;
+import com.zarol.projectalias.events.TouchUpEvent;
+import com.zarol.projectalias.framework.Entity;
+import com.zarol.projectalias.framework.EntityManager;
+import com.zarol.projectalias.framework.EventManager;
 import com.zarol.projectalias.view.WorldRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
-	private World world;
+	private EntityManager entityManager;
+	private EventManager eventManager;
 	private WorldRenderer renderer;
-	private BobController controller;
 
 	private int width, height;
 
 	@Override
 	public void show() {
-		world = new World();
-		renderer = new WorldRenderer(world, false);
-		controller = new BobController(world);
+		entityManager = new EntityManager();
+		eventManager = new EventManager();
+		renderer = new WorldRenderer(entityManager, false);
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -30,7 +35,10 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		controller.update(delta);
+		entityManager.update();
+		for(Entity entity : entityManager.getAll()) {
+			entity.update(delta);
+		}
 		renderer.render();
 	}
 
@@ -43,14 +51,10 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -65,35 +69,14 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.LEFT) {
-			controller.leftPressed();
-		}
-		if (keycode == Keys.RIGHT) {
-			controller.rightPressed();
-		}
-		if (keycode == Keys.Z) {
-			controller.jumpPressed();
-		}
-		if (keycode == Keys.X) {
-			controller.firePressed();
-		}
+		eventManager.notify(new KeyDownEvent(keycode));
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Keys.LEFT) {
-			controller.leftReleased();
-		}
-		if (keycode == Keys.RIGHT) {
-			controller.rightReleased();
-		}
-		if (keycode == Keys.Z) {
-			controller.jumpReleased();
-		}
-		if (keycode == Keys.X) {
-			controller.fireReleased();
-		}
+		eventManager.notify(new KeyUpEvent(keycode));
+
 		if (keycode == Keys.D) {
 			renderer.setDebug(!renderer.isDebug());
 		}
@@ -102,7 +85,6 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -111,16 +93,8 @@ public class GameScreen implements Screen, InputProcessor {
 		if (Gdx.app.getType().equals(ApplicationType.Desktop)) {
 			return false;
 		}
+		eventManager.notify(new TouchDownEvent(screenX, screenY, pointer, button, width, height));
 
-		if (screenX < width / 2 && screenY > height / 2) {
-			controller.leftPressed();
-		}
-		if (screenX > width / 2 && screenY > height / 2) {
-			controller.rightPressed();
-		}
-		if (screenY < height / 2) {
-			controller.jumpPressed();
-		}
 		return true;
 	}
 
@@ -129,35 +103,23 @@ public class GameScreen implements Screen, InputProcessor {
 		if (Gdx.app.getType().equals(ApplicationType.Desktop)) {
 			return false;
 		}
+		eventManager.notify(new TouchUpEvent(screenX, screenY, pointer, button, width, height));
 
-		if (screenX < width / 2 && screenY > height / 2) {
-			controller.leftReleased();
-		}
-		if (screenX > width / 2 && screenY > height / 2) {
-			controller.rightReleased();
-		}
-		if (screenY < height / 2) {
-			controller.jumpReleased();
-		}
 		return true;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

@@ -55,7 +55,6 @@ public abstract class Component {
 	 *
 	 * @param delta The Time that has passed since the last update.
 	 */
-	@SuppressWarnings("unused")
 	public void update(float delta) {
 	}
 }
