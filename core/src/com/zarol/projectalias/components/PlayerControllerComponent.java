@@ -99,7 +99,9 @@ public class PlayerControllerComponent extends Component {
 		if (getEntity().has(AccelerationComponent.class)) {
 			Vector2 acceleration = getEntity().get(AccelerationComponent.class).getAcceleration();
 
-			if (keys.get(Keys.LEFT)) {
+			if (keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) {
+				acceleration.x = 0;
+			} else if (keys.get(Keys.LEFT)) {
 				acceleration.x = -ACCELERATION;
 			} else if (keys.get(Keys.RIGHT)) {
 				acceleration.x = ACCELERATION;
