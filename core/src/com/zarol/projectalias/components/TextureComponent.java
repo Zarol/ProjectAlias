@@ -17,11 +17,25 @@ public class TextureComponent extends Component {
 		textures = new HashMap<String, TextureRegion>();
 	}
 
-	public void loadTexture(TextureAtlas atlas, String regionName, int index, String textureAlias) {
-		textures.put(textureAlias, atlas.findRegion(regionName, index));
+	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName) {
+		textures.put(textureAlias, textureAtlas.findRegion(regionName));
 	}
 
-	public void loadTexture(TextureRegion textureRegion, String textureAlias) {
+	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName,
+							boolean flipX, boolean flipY) {
+		TextureRegion textureRegion = textureAtlas.findRegion(regionName);
+		textureRegion.flip(flipX, flipY);
+		textures.put(textureAlias, textureRegion);
+	}
+
+	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName, int index) {
+		textures.put(textureAlias, textureAtlas.findRegion(regionName, index));
+	}
+
+	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName, int index,
+							boolean flipX, boolean flipY) {
+		TextureRegion textureRegion = textureAtlas.findRegion(regionName, index);
+		textureRegion.flip(flipX, flipY);
 		textures.put(textureAlias, textureRegion);
 	}
 
@@ -32,7 +46,7 @@ public class TextureComponent extends Component {
 	public TextureRegion get(String textureAlias) {
 		if (!has(textureAlias)) {
 			throw new IllegalArgumentException(getEntity().getClass().getName() +
-				" does not contain " + textureAlias + ".");
+					" does not contain " + textureAlias + ".");
 		}
 		return textures.get(textureAlias);
 	}
