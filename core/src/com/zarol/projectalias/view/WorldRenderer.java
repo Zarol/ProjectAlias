@@ -1,12 +1,8 @@
 package com.zarol.projectalias.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,7 +12,6 @@ import com.zarol.projectalias.components.DrawableComponent;
 import com.zarol.projectalias.components.PositionComponent;
 import com.zarol.projectalias.framework.Entity;
 import com.zarol.projectalias.framework.EntityManager;
-import com.zarol.projectalias.model.Bob.State;
 
 public class WorldRenderer {
 	private static final float CAMERA_WIDTH = 10f;
@@ -58,7 +53,7 @@ public class WorldRenderer {
 		spriteBatch.setProjectionMatrix(cam.combined);
 		spriteBatch.begin();
 		for (Entity entity : entityManager.getAll()) {
-			if(entity.has(DrawableComponent.class) && entity.has(PositionComponent.class)) {
+			if (entity.has(DrawableComponent.class) && entity.has(PositionComponent.class)) {
 				DrawableComponent drawableComponent = entity.get(DrawableComponent.class);
 				Vector2 position = entity.get(PositionComponent.class).getPosition();
 				spriteBatch.draw(drawableComponent.getTextureRegion(), position.x, position.y,
@@ -76,7 +71,7 @@ public class WorldRenderer {
 		debugRenderer.setProjectionMatrix(cam.combined);
 		debugRenderer.begin(ShapeType.Line);
 		for (Entity entity : entityManager.getAll()) {
-			if(entity.has(CollisionComponent.class) && entity.has(PositionComponent.class)) {
+			if (entity.has(CollisionComponent.class) && entity.has(PositionComponent.class)) {
 				Rectangle rectangle = entity.get(CollisionComponent.class).getBounds();
 				debugRenderer.setColor(Color.RED);
 				debugRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);

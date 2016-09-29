@@ -10,15 +10,16 @@ import com.zarol.projectalias.events.KeyDownEvent;
 import com.zarol.projectalias.events.KeyUpEvent;
 import com.zarol.projectalias.events.TouchDownEvent;
 import com.zarol.projectalias.events.TouchUpEvent;
-import com.zarol.projectalias.framework.Entity;
 import com.zarol.projectalias.framework.EntityManager;
 import com.zarol.projectalias.framework.EventManager;
+import com.zarol.projectalias.game.World;
 import com.zarol.projectalias.view.WorldRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
 	private EntityManager entityManager;
 	private EventManager eventManager;
-	private WorldRenderer renderer;
+	private World world;
+	private WorldRenderer worldRenderer;
 
 	private int width, height;
 
@@ -26,7 +27,8 @@ public class GameScreen implements Screen, InputProcessor {
 	public void show() {
 		entityManager = new EntityManager();
 		eventManager = new EventManager();
-		renderer = new WorldRenderer(entityManager, false);
+		world = new World(entityManager, eventManager);
+		worldRenderer = new WorldRenderer(entityManager, false);
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -36,17 +38,15 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		entityManager.update();
-		for(Entity entity : entityManager.getAll()) {
-			entity.update(delta);
-		}
-		renderer.render();
+		world.update(delta);
+		worldRenderer.render();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		this.width = width;
 		this.height = height;
-		renderer.setSize(this.width, this.height);
+		worldRenderer.setSize(this.width, this.height);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class GameScreen implements Screen, InputProcessor {
 		eventManager.notify(new KeyUpEvent(keycode));
 
 		if (keycode == Keys.D) {
-			renderer.setDebug(!renderer.isDebug());
+			worldRenderer.setDebug(!worldRenderer.isDebug());
 		}
 		return true;
 	}
