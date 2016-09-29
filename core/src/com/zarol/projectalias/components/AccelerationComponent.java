@@ -7,7 +7,11 @@ import com.zarol.projectalias.framework.Component;
  * @author Zarol
  */
 public class AccelerationComponent extends Component {
-	private Vector2 acceleration = new Vector2();
+	private Vector2 acceleration;
+
+	public AccelerationComponent() {
+		acceleration = new Vector2();
+	}
 
 	public AccelerationComponent(Vector2 acceleration) {
 		this.acceleration = acceleration;
