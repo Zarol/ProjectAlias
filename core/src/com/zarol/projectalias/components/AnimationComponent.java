@@ -20,26 +20,26 @@ public class AnimationComponent extends Component {
 		animations = new HashMap<String, Animation>();
 	}
 
-	public void loadAnimation(TextureAtlas atlas, String regionName,
-							  int start, int end, float duration, String animationAlias) {
-		if (end > start) {
-			throw new IllegalArgumentException("The end value cannot be larger than the starting value.");
+	public void loadAnimation(String animationAlias, TextureAtlas atlas, String regionName,
+							  int start, int end, float duration) {
+		if (start > end) {
+			throw new IllegalArgumentException("The start value cannot be larger than the end value.");
 		}
-		TextureRegion[] animationFrames = new TextureRegion[end - start];
-		for (int i = 0, j = start; j < end; ++i, ++j) {
+		TextureRegion[] animationFrames = new TextureRegion[end - start + 1];
+		for (int i = 0, j = start; j <= end; ++i, ++j) {
 			animationFrames[i] = atlas.findRegion(regionName, j);
 		}
 		animations.put(animationAlias, new Animation(duration, animationFrames));
 	}
 
-	public void loadAnimation(TextureAtlas atlas, String regionName,
-							  int start, int end, float duration, String animationAlias,
+	public void loadAnimation(String animationAlias, TextureAtlas atlas, String regionName,
+							  int start, int end, float duration,
 							  boolean flipX, boolean flipY) {
-		if (end > start) {
-			throw new IllegalArgumentException("The end value cannot be larger than the starting value.");
+		if (start > end) {
+			throw new IllegalArgumentException("The start value cannot be larger than the end value.");
 		}
-		TextureRegion[] animationFrames = new TextureRegion[end - start];
-		for (int i = 0, j = start; j < end; ++i, ++j) {
+		TextureRegion[] animationFrames = new TextureRegion[end - start + 1];
+		for (int i = 0, j = start; j <= end; ++i, ++j) {
 			animationFrames[i] = atlas.findRegion(regionName, j);
 			animationFrames[i].flip(flipX, flipY);
 		}
