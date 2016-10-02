@@ -18,23 +18,23 @@ public class TextureComponent extends Component {
 	}
 
 	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName) {
-		textures.put(textureAlias, textureAtlas.findRegion(regionName));
+		textures.put(textureAlias, new TextureRegion(textureAtlas.findRegion(regionName)));
 	}
 
 	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName,
 							boolean flipX, boolean flipY) {
-		TextureRegion textureRegion = textureAtlas.findRegion(regionName);
+		TextureRegion textureRegion = new TextureRegion(textureAtlas.findRegion(regionName));
 		textureRegion.flip(flipX, flipY);
 		textures.put(textureAlias, textureRegion);
 	}
 
 	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName, int index) {
-		textures.put(textureAlias, textureAtlas.findRegion(regionName, index));
+		textures.put(textureAlias, new TextureRegion(textureAtlas.findRegion(regionName, index)));
 	}
 
 	public void loadTexture(String textureAlias, TextureAtlas textureAtlas, String regionName, int index,
 							boolean flipX, boolean flipY) {
-		TextureRegion textureRegion = textureAtlas.findRegion(regionName, index);
+		TextureRegion textureRegion = new TextureRegion(textureAtlas.findRegion(regionName, index));
 		textureRegion.flip(flipX, flipY);
 		textures.put(textureAlias, textureRegion);
 	}

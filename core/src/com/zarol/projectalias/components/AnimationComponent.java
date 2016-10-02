@@ -27,7 +27,7 @@ public class AnimationComponent extends Component {
 		}
 		TextureRegion[] animationFrames = new TextureRegion[end - start + 1];
 		for (int i = 0, j = start; j <= end; ++i, ++j) {
-			animationFrames[i] = atlas.findRegion(regionName, j);
+			animationFrames[i] = new TextureRegion(atlas.findRegion(regionName, j));
 		}
 		animations.put(animationAlias, new Animation(duration, animationFrames));
 	}
@@ -40,7 +40,7 @@ public class AnimationComponent extends Component {
 		}
 		TextureRegion[] animationFrames = new TextureRegion[end - start + 1];
 		for (int i = 0, j = start; j <= end; ++i, ++j) {
-			animationFrames[i] = atlas.findRegion(regionName, j);
+			animationFrames[i] = new TextureRegion(atlas.findRegion(regionName, j));
 			animationFrames[i].flip(flipX, flipY);
 		}
 		animations.put(animationAlias, new Animation(duration, animationFrames));
