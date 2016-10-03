@@ -35,24 +35,24 @@ public class World {
 
 		//Create player
 		{
-			Vector2 playerSize = new Vector2(.5f, .5f);
+			Vector2 playerSize = new Vector2(1f, 1f);
 			player = new Entity();
 			player.attach(new AccelerationComponent());
-			player.attach(new VelocityComponent(new Vector2(4f, Float.MAX_VALUE)));
+			player.attach(new VelocityComponent(new Vector2(4f, 4f), new Vector2(0,0), new Vector2(1,1)));
 			player.attach(new PositionComponent(new Vector2(7, 2)));
 			player.attach(new CollisionComponent(new Rectangle(0, 0, playerSize.x, playerSize.y)));
 			player.attach(new PlayerControllerComponent(eventManager));
 			TextureComponent textureComponent = new TextureComponent();
-			textureComponent.loadTexture("IdleLeft", textureAtlas, "bob", 1);
-			textureComponent.loadTexture("IdleRight", textureAtlas, "bob", 1, true, false);
-			textureComponent.loadTexture("JumpLeft", textureAtlas, "bob-up");
-			textureComponent.loadTexture("JumpRight", textureAtlas, "bob-up", true, false);
-			textureComponent.loadTexture("FallLeft", textureAtlas, "bob-down");
-			textureComponent.loadTexture("FallRight", textureAtlas, "bob-down", true, false);
+			textureComponent.loadTexture("IdleLeft", textureAtlas, "Astronaut-Left", 0);
+			textureComponent.loadTexture("IdleRight", textureAtlas, "Astronaut-Right", 0);
+			textureComponent.loadTexture("IdleUp", textureAtlas, "Astronaut-Up", 0);
+			textureComponent.loadTexture("IdleDown", textureAtlas, "Astronaut-Down", 0);
 			player.attach(textureComponent);
 			AnimationComponent animationComponent = new AnimationComponent();
-			animationComponent.loadAnimation("WalkingLeft", textureAtlas, "bob", 2, 6, .06f);
-			animationComponent.loadAnimation("WalkingRight", textureAtlas, "bob", 2, 6, .06f, true, false);
+			animationComponent.loadAnimation("WalkingLeft", textureAtlas, "Astronaut-Left", 0, 8, .06f);
+			animationComponent.loadAnimation("WalkingRight", textureAtlas, "Astronaut-Right", 0, 8, .06f);
+			animationComponent.loadAnimation("WalkingUp", textureAtlas, "Astronaut-Up", 0, 0, .06f);
+			animationComponent.loadAnimation("WalkingDown", textureAtlas, "Astronaut-Down", 0, 0, .06f);
 			player.attach(animationComponent);
 			player.attach(new DrawableComponent(textureComponent.get("IdleLeft"), playerSize.x, playerSize.y));
 			entityManager.add(player);
