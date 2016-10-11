@@ -64,32 +64,34 @@ public class PlayerControllerComponent extends Component {
 				}
 			}
 		});
-		eventManager.listen(TouchDownEvent.class, new TouchDownListener() {
+		eventManager.listen(SwipeEvent.class, new SwipeListener() {
 			@Override
-			public void touchDown(int screenX, int screenY, int pointer, int button,
-								  int screenWidth, int screenHeight) {
-				if (screenX < screenWidth / 2 && screenY > screenHeight / 2) {
-					keys.get(keys.put(Keys.LEFT, true));
-				}
-				if (screenX > screenWidth / 2 && screenY > screenHeight / 2) {
-					keys.get(keys.put(Keys.RIGHT, true));
-				}
-				if (screenY < screenHeight / 2) {
-					keys.get(keys.put(Keys.UP, true));
-				}
-			}
-		});
-		eventManager.listen(TouchUpEvent.class, new TouchUpListener() {
-			@Override
-			public void touchUp(int screenX, int screenY, int pointer, int button, int screenWidth, int screenHeight) {
-				if (screenX < screenWidth / 2 && screenY > screenHeight / 2) {
-					keys.get(keys.put(Keys.LEFT, false));
-				}
-				if (screenX > screenWidth / 2 && screenY > screenHeight / 2) {
-					keys.get(keys.put(Keys.RIGHT, false));
-				}
-				if (screenY < screenHeight / 2) {
-					keys.get(keys.put(Keys.UP, false));
+			public void swipe(SwipeDirection direction) {
+				switch (direction) {
+					case UP:
+						keys.get(keys.put(Keys.UP, true));
+						keys.get(keys.put(Keys.DOWN, false));
+						keys.get(keys.put(Keys.LEFT, false));
+						keys.get(keys.put(Keys.RIGHT, false));
+						break;
+					case DOWN:
+						keys.get(keys.put(Keys.UP, false));
+						keys.get(keys.put(Keys.DOWN, true));
+						keys.get(keys.put(Keys.LEFT, false));
+						keys.get(keys.put(Keys.RIGHT, false));
+						break;
+					case LEFT:
+						keys.get(keys.put(Keys.UP, false));
+						keys.get(keys.put(Keys.DOWN, false));
+						keys.get(keys.put(Keys.LEFT, true));
+						keys.get(keys.put(Keys.RIGHT, false));
+						break;
+					case RIGHT:
+						keys.get(keys.put(Keys.UP, false));
+						keys.get(keys.put(Keys.DOWN, false));
+						keys.get(keys.put(Keys.LEFT, false));
+						keys.get(keys.put(Keys.RIGHT, true));
+						break;
 				}
 			}
 		});
@@ -134,16 +136,16 @@ public class PlayerControllerComponent extends Component {
 			}
 
 			//Player is now Idle
-			if (velocity.x == 0 && velocity.y == 0) {
+			if (previousVelocity.x == 0 && previousVelocity.y == 0) {
 				if (textureComponent != null) {
 					try {
-						if (previousVelocity.x < 0) {
+						if (velocity.x < 0) {
 							drawableComponent.setTextureRegion(textureComponent.get("IdleLeft"));
-						} else if (previousVelocity.x > 0) {
+						} else if (velocity.x > 0) {
 							drawableComponent.setTextureRegion(textureComponent.get("IdleRight"));
-						} else if (previousVelocity.y > 0) {
+						} else if (velocity.y > 0) {
 							drawableComponent.setTextureRegion(textureComponent.get("IdleUp"));
-						} else if (previousVelocity.y < 0) {
+						} else if (velocity.y < 0) {
 							drawableComponent.setTextureRegion(textureComponent.get("IdleDown"));
 						}
 					} catch (IllegalArgumentException e) {
@@ -158,13 +160,13 @@ public class PlayerControllerComponent extends Component {
 			//Player is moving
 			if (animationComponent != null) {
 				try {
-					if (velocity.x < 0) {
+					if (previousVelocity.x < 0) {
 						drawableComponent.setTextureRegion(animationComponent.get("WalkingLeft"));
-					} else if (velocity.x > 0) {
+					} else if (previousVelocity.x > 0) {
 						drawableComponent.setTextureRegion(animationComponent.get("WalkingRight"));
-					} else if (velocity.y > 0) {
+					} else if (previousVelocity.y > 0) {
 						drawableComponent.setTextureRegion(animationComponent.get("WalkingUp"));
-					} else if (velocity.y < 0) {
+					} else if (previousVelocity.y < 0) {
 						drawableComponent.setTextureRegion(animationComponent.get("WalkingDown"));
 					}
 				} catch (IllegalArgumentException e) {

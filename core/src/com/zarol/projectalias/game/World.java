@@ -35,7 +35,7 @@ public class World {
 
 		//Create player
 		{
-			Vector2 playerSize = new Vector2(1f, 1f);
+			Vector2 playerSize = new Vector2(.4f, .4f);
 			player = new Entity();
 			player.attach(new AccelerationComponent());
 			player.attach(new VelocityComponent(new Vector2(4f, 4f), new Vector2(0,0), new Vector2(1,1)));
@@ -56,6 +56,54 @@ public class World {
 			player.attach(animationComponent);
 			player.attach(new DrawableComponent(textureComponent.get("IdleLeft"), playerSize.x, playerSize.y));
 			entityManager.add(player);
+		}
+
+		//Block
+		Vector2 blockSize = new Vector2(.4f, .4f);
+		TextureComponent textureComponent = new TextureComponent();
+		textureComponent.loadTexture("Emerald", textureAtlas, "Block-Emerald");
+		textureComponent.loadTexture("Gold", textureAtlas, "Block-Gold");
+		textureComponent.loadTexture("Ruby", textureAtlas, "Block-Ruby");
+		textureComponent.loadTexture("Sapphire", textureAtlas, "Block-Sapphire");
+
+		//Create Emerald Block
+		{
+			Entity emerald = new Entity();
+			emerald.attach(new PositionComponent(new Vector2(0,0)));
+			emerald.attach(new CollisionComponent(new Rectangle(0,0, blockSize.x, blockSize.y)));
+			emerald.attach(textureComponent);
+			emerald.attach(new DrawableComponent(textureComponent.get("Emerald"), blockSize.x, blockSize.y));
+			entityManager.add(emerald);
+		}
+
+		//Create Gold Blocks
+		{
+			Entity gold = new Entity();
+			gold.attach(new PositionComponent(new Vector2(1,1)));
+			gold.attach(new CollisionComponent(new Rectangle(0,0, blockSize.x, blockSize.y)));
+			gold.attach(textureComponent);
+			gold.attach(new DrawableComponent(textureComponent.get("Gold"), blockSize.x, blockSize.y));
+			entityManager.add(gold);
+		}
+
+		//Create Ruby Blocks
+		{
+			Entity ruby = new Entity();
+			ruby.attach(new PositionComponent(new Vector2(2,2)));
+			ruby.attach(new CollisionComponent(new Rectangle(0,0, blockSize.x, blockSize.y)));
+			ruby.attach(textureComponent);
+			ruby.attach(new DrawableComponent(textureComponent.get("Ruby"), blockSize.x, blockSize.y));
+			entityManager.add(ruby);
+		}
+
+		//Create Sapphire Blocks
+		{
+			Entity sapphire = new Entity();
+			sapphire.attach(new PositionComponent(new Vector2(3,3)));
+			sapphire.attach(new CollisionComponent(new Rectangle(0,0, blockSize.x, blockSize.y)));
+			sapphire.attach(textureComponent);
+			sapphire.attach(new DrawableComponent(textureComponent.get("Sapphire"), blockSize.x, blockSize.y));
+			entityManager.add(sapphire);
 		}
 	}
 }

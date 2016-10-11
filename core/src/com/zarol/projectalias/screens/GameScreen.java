@@ -1,21 +1,17 @@
 package com.zarol.projectalias.screens;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.zarol.projectalias.events.KeyDownEvent;
-import com.zarol.projectalias.events.KeyUpEvent;
-import com.zarol.projectalias.events.TouchDownEvent;
-import com.zarol.projectalias.events.TouchUpEvent;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
+import com.zarol.projectalias.events.*;
 import com.zarol.projectalias.framework.EntityManager;
 import com.zarol.projectalias.framework.EventManager;
 import com.zarol.projectalias.game.World;
 import com.zarol.projectalias.view.WorldRenderer;
 
-public class GameScreen implements Screen, InputProcessor {
+public class GameScreen implements Screen, GestureDetector.GestureListener {
 	private EntityManager entityManager;
 	private EventManager eventManager;
 	private World world;
@@ -29,7 +25,7 @@ public class GameScreen implements Screen, InputProcessor {
 		eventManager = new EventManager();
 		world = new World(entityManager, eventManager);
 		worldRenderer = new WorldRenderer(entityManager, false);
-		Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(new GestureDetector(this));
 	}
 
 	@Override
@@ -68,58 +64,60 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	@Override
-	public boolean keyDown(int keycode) {
-		eventManager.notify(new KeyDownEvent(keycode));
-		return true;
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		return false;
 	}
 
 	@Override
-	public boolean keyUp(int keycode) {
-		eventManager.notify(new KeyUpEvent(keycode));
+	public boolean tap(float x, float y, int count, int button) {
+		return false;
+	}
 
-		if (keycode == Keys.D) {
-			worldRenderer.setDebug(!worldRenderer.isDebug());
+	@Override
+	public boolean longPress(float x, float y) {
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button) {
+		if(Math.abs(velocityX)>Math.abs(velocityY)){
+			if(velocityX>0){
+				eventManager.notify(new SwipeEvent(SwipeListener.SwipeDirection.RIGHT));
+			}else{
+				eventManager.notify(new SwipeEvent(SwipeListener.SwipeDirection.LEFT));
+			}
+		}else{
+			if(velocityY>0){
+				eventManager.notify(new SwipeEvent(SwipeListener.SwipeDirection.DOWN));
+			}else{
+				eventManager.notify(new SwipeEvent(SwipeListener.SwipeDirection.UP));
+			}
 		}
 		return true;
 	}
 
 	@Override
-	public boolean keyTyped(char character) {
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		return false;
 	}
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (Gdx.app.getType().equals(ApplicationType.Desktop)) {
-			return false;
-		}
-		eventManager.notify(new TouchDownEvent(screenX, screenY, pointer, button, width, height));
-
-		return true;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (Gdx.app.getType().equals(ApplicationType.Desktop)) {
-			return false;
-		}
-		eventManager.notify(new TouchUpEvent(screenX, screenY, pointer, button, width, height));
-
-		return true;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
+	public boolean panStop(float x, float y, int pointer, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
+	public boolean zoom(float initialDistance, float distance) {
 		return false;
 	}
 
 	@Override
-	public boolean scrolled(int amount) {
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
 		return false;
+	}
+
+	@Override
+	public void pinchStop() {
+
 	}
 }
