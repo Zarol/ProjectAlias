@@ -24,7 +24,7 @@ public class World {
 	private EventManager eventManager;
 	private List<EntitySystem> systemsList;
 
-	private static final Vector2 BLOCK_SIZE = new Vector2(.5f, .5f);
+	private static final Vector2 BLOCK_SIZE = new Vector2(.45f, .45f);
 	private static final Vector2 PLAYER_SIZE = new Vector2(.5f, .5f);
 
 	public World(EntityManager entityManager, EventManager eventManager) {
@@ -70,7 +70,7 @@ public class World {
 			Entity player = new Entity();
 			player.attach(new AccelerationComponent(new Vector2(1000f, 1000f)));
 			player.attach(new VelocityComponent(new Vector2(3f, 3f), new Vector2(0f, 0f), new Vector2(1f, 1f)));
-			player.attach(new PositionComponent(new Vector2(7f, 2f)));
+			player.attach(new PositionComponent(new Vector2(5f, 3.5f)));
 			player.attach(new CollisionComponent(new Rectangle(0f, 0f, PLAYER_SIZE.x, PLAYER_SIZE.y)));
 			player.attach(new PlayerControlledComponent());
 			AnimationComponent animationComponent = new AnimationComponent();
@@ -105,43 +105,30 @@ public class World {
 			entityManager.add(player);
 		}
 
-		//Create Emerald Block
-		{
-			AnimationComponent emeraldAnimation = loadBlockAnimation(textureAtlas, "Block-Emerald");
-
-			for (float i = .5f; i < 9.5f; i += .5f) {
-				Entity emerald = createBlockEntity(new Vector2(i, 6.5f), emeraldAnimation);
-				entityManager.add(emerald);
-			}
-		}
-
-		//Create Gold Blocks
-		{
-			AnimationComponent goldAnimation = loadBlockAnimation(textureAtlas, "Block-Gold");
-
-			for (float i = .5f; i < 9.5f; i += .5f) {
-				Entity gold = createBlockEntity(new Vector2(i, 0f), goldAnimation);
-				entityManager.add(gold);
-			}
-		}
-
-		//Create Ruby Blocks
-		{
-			AnimationComponent rubyAnimation = loadBlockAnimation(textureAtlas, "Block-Ruby");
-
-			for (float i = 0f; i < 7f; i += .5f) {
-				Entity ruby = createBlockEntity(new Vector2(9.5f, i), rubyAnimation);
-				entityManager.add(ruby);
-			}
-		}
-
-		//Create Sapphire Blocks
-		{
-			AnimationComponent sapphireAnimation = loadBlockAnimation(textureAtlas, "Block-Sapphire");
-
-			for (float i = 0f; i < 7f; i += .5f) {
-				Entity sapphire = createBlockEntity(new Vector2(0f, i), sapphireAnimation);
-				entityManager.add(sapphire);
+		AnimationComponent emeraldAnimation = loadBlockAnimation(textureAtlas, "Block-Emerald");
+		AnimationComponent goldAnimation = loadBlockAnimation(textureAtlas, "Block-Gold");
+		AnimationComponent rubyAnimation = loadBlockAnimation(textureAtlas, "Block-Ruby");
+		AnimationComponent sapphireAnimation = loadBlockAnimation(textureAtlas, "Block-Sapphire");
+		for (int x = 0; x < Level1.level.length; x ++ ) {
+			for (int y = 0; y < Level1.level[0].length; y ++ ) {
+				Entity block = null;
+				switch (Level1.level[x][y]) {
+					case 'e':
+						block = createBlockEntity(new Vector2(y*.5f,x*.5f), emeraldAnimation);
+						break;
+					case 'g':
+						block = createBlockEntity(new Vector2(y*.5f,x*.5f), goldAnimation);
+						break;
+					case 'r':
+						block = createBlockEntity(new Vector2(y*.5f,x*.5f), rubyAnimation);
+						break;
+					case 's':
+						block = createBlockEntity(new Vector2(y*.5f,x*.5f), sapphireAnimation);
+						break;
+				}
+				if (block != null) {
+					entityManager.add(block);
+				}
 			}
 		}
 	}

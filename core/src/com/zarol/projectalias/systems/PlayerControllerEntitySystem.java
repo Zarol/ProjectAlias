@@ -69,6 +69,8 @@ public class PlayerControllerEntitySystem extends EntitySystem {
 		character.detach(DownComponent.class);
 		character.detach(LeftComponent.class);
 		character.detach(RightComponent.class);
+
+		character.detach(IdleComponent.class);
 	}
 
 	private void doDown() {
@@ -87,6 +89,8 @@ public class PlayerControllerEntitySystem extends EntitySystem {
 		character.attach(new DownComponent());
 		character.detach(LeftComponent.class);
 		character.detach(RightComponent.class);
+
+		character.detach(IdleComponent.class);
 	}
 
 	private void doLeft() {
@@ -105,6 +109,8 @@ public class PlayerControllerEntitySystem extends EntitySystem {
 		character.detach(DownComponent.class);
 		character.attach(new LeftComponent());
 		character.detach(RightComponent.class);
+
+		character.detach(IdleComponent.class);
 	}
 
 	private void doRight() {
@@ -123,5 +129,7 @@ public class PlayerControllerEntitySystem extends EntitySystem {
 		character.detach(DownComponent.class);
 		character.detach(LeftComponent.class);
 		character.attach(new RightComponent());
+
+		character.detach(IdleComponent.class);
 	}
 }
