@@ -61,6 +61,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 	@Override
 	public void dispose() {
 		Gdx.input.setInputProcessor(null);
+		world.cleanup();
 	}
 
 	@Override

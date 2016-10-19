@@ -150,25 +150,25 @@ Block-Emerald
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
+  index: 0
 Block-Gold
   rotate: false
   xy: 648, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
+  index: 0
 Block-Ruby
   rotate: false
   xy: 682, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
+  index: 0
 Block-Sapphire
   rotate: false
   xy: 716, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
+  index: 0

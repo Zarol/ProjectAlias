@@ -20,11 +20,4 @@ public class PositionComponent extends Component {
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
-
-	@Override
-	public void update(float delta) {
-		if(getEntity().has(VelocityComponent.class)) {
-			position.add(getEntity().get(VelocityComponent.class).getVelocity().cpy().scl(delta));
-		}
-	}
 }

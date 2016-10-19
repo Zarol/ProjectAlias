@@ -58,24 +58,4 @@ public class VelocityComponent extends Component {
 	public void setDampen(Vector2 dampen) {
 		this.dampen = dampen;
 	}
-
-	@Override
-	public void update(float delta) {
-		if (getEntity().has(AccelerationComponent.class)) {
-			Vector2 acceleration = getEntity().get(AccelerationComponent.class).getAcceleration();
-			velocity.add(acceleration);
-
-			if (acceleration.x == 0) {
-				velocity.x *= dampen.x;
-			}
-
-			if (acceleration.y == 0) {
-				velocity.y *= dampen.y;
-			}
-
-			//Clamps the velocity to maxVelocity
-			velocity.x = Math.max(-maxVelocity.x, Math.min(maxVelocity.x, velocity.x));
-			velocity.y = Math.max(-maxVelocity.y, Math.min(maxVelocity.y, velocity.y));
-		}
-	}
 }
