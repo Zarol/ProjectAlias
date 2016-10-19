@@ -24,6 +24,9 @@ public class World {
 	private EventManager eventManager;
 	private List<EntitySystem> systemsList;
 
+	private static final Vector2 BLOCK_SIZE = new Vector2(.5f, .5f);
+	private static final Vector2 PLAYER_SIZE = new Vector2(.5f, .5f);
+
 	public World(EntityManager entityManager, EventManager eventManager) {
 		this.entityManager = entityManager;
 		this.eventManager = eventManager;
@@ -64,12 +67,11 @@ public class World {
 
 		//Create player
 		{
-			Vector2 playerSize = new Vector2(.5f, .5f);
 			Entity player = new Entity();
 			player.attach(new AccelerationComponent(new Vector2(1000f, 1000f)));
 			player.attach(new VelocityComponent(new Vector2(3f, 3f), new Vector2(0f, 0f), new Vector2(1f, 1f)));
 			player.attach(new PositionComponent(new Vector2(7f, 2f)));
-			player.attach(new CollisionComponent(new Rectangle(0f, 0f, playerSize.x, playerSize.y)));
+			player.attach(new CollisionComponent(new Rectangle(0f, 0f, PLAYER_SIZE.x, PLAYER_SIZE.y)));
 			player.attach(new PlayerControlledComponent());
 			AnimationComponent animationComponent = new AnimationComponent();
 			animationComponent.loadAnimation(
@@ -99,116 +101,78 @@ public class World {
 			player.attach(animationComponent);
 			player.attach(new DrawableComponent(
 					animationComponent.get(SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name()),
-					playerSize.x, playerSize.y));
+					PLAYER_SIZE.x, PLAYER_SIZE.y));
 			entityManager.add(player);
 		}
 
-		//Block
-		Vector2 blockSize = new Vector2(.5f, .5f);
-
 		//Create Emerald Block
 		{
-			AnimationComponent emeraldAnimation = new AnimationComponent();
-			emeraldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
-					textureAtlas, "Block-Emerald", 0, 0, 0);
-			emeraldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
-					textureAtlas, "Block-Emerald", 0, 0, 0);
-			emeraldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
-					textureAtlas, "Block-Emerald", 0, 0, 0);
-			emeraldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
-					textureAtlas, "Block-Emerald", 0, 0, 0);
+			AnimationComponent emeraldAnimation = loadBlockAnimation(textureAtlas, "Block-Emerald");
 
-			Entity emerald = new Entity();
-			emerald.attach(new PositionComponent(new Vector2(0f, 0f)));
-			emerald.attach(new CollisionComponent(new Rectangle(0f, 0f, blockSize.x, blockSize.y)));
-			emerald.attach(new IdleComponent());
-			emerald.attach(emeraldAnimation);
-			emerald.attach(new DrawableComponent(emeraldAnimation.get(SpriteEntitySystem.SpriteStatus.IDLE.name()
-					+ SpriteEntitySystem.SpriteDirection.DOWN.name()), blockSize.x, blockSize.y));
-			entityManager.add(emerald);
+			for (float i = .5f; i < 9.5f; i += .5f) {
+				Entity emerald = createBlockEntity(new Vector2(i, 6.5f), emeraldAnimation);
+				entityManager.add(emerald);
+			}
 		}
-
 
 		//Create Gold Blocks
 		{
-			AnimationComponent goldAnimation = new AnimationComponent();
-			goldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
-					textureAtlas, "Block-Gold", 0, 0, 0);
-			goldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
-					textureAtlas, "Block-Gold", 0, 0, 0);
-			goldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
-					textureAtlas, "Block-Gold", 0, 0, 0);
-			goldAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
-					textureAtlas, "Block-Gold", 0, 0, 0);
+			AnimationComponent goldAnimation = loadBlockAnimation(textureAtlas, "Block-Gold");
 
-			Entity gold = new Entity();
-			gold.attach(new PositionComponent(new Vector2(1f, 1f)));
-			gold.attach(new CollisionComponent(new Rectangle(0f, 0f, blockSize.x, blockSize.y)));
-			gold.attach(new IdleComponent());
-			gold.attach(goldAnimation);
-			gold.attach(new DrawableComponent(goldAnimation.get(SpriteEntitySystem.SpriteStatus.IDLE.name()
-					+ SpriteEntitySystem.SpriteDirection.DOWN.name()), blockSize.x, blockSize.y));
-			entityManager.add(gold);
+			for (float i = .5f; i < 9.5f; i += .5f) {
+				Entity gold = createBlockEntity(new Vector2(i, 0f), goldAnimation);
+				entityManager.add(gold);
+			}
 		}
 
 		//Create Ruby Blocks
 		{
-			AnimationComponent rubyAnimation = new AnimationComponent();
-			rubyAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
-					textureAtlas, "Block-Ruby", 0, 0, 0);
-			rubyAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
-					textureAtlas, "Block-Ruby", 0, 0, 0);
-			rubyAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
-					textureAtlas, "Block-Ruby", 0, 0, 0);
-			rubyAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
-					textureAtlas, "Block-Ruby", 0, 0, 0);
+			AnimationComponent rubyAnimation = loadBlockAnimation(textureAtlas, "Block-Ruby");
 
-			Entity ruby = new Entity();
-			ruby.attach(new PositionComponent(new Vector2(2f, 2f)));
-			ruby.attach(new CollisionComponent(new Rectangle(0f, 0f, blockSize.x, blockSize.y)));
-			ruby.attach(new IdleComponent());
-			ruby.attach(rubyAnimation);
-			ruby.attach(new DrawableComponent(rubyAnimation.get(SpriteEntitySystem.SpriteStatus.IDLE.name()
-					+ SpriteEntitySystem.SpriteDirection.DOWN.name()), blockSize.x, blockSize.y));
-			entityManager.add(ruby);
+			for (float i = 0f; i < 7f; i += .5f) {
+				Entity ruby = createBlockEntity(new Vector2(9.5f, i), rubyAnimation);
+				entityManager.add(ruby);
+			}
 		}
 
 		//Create Sapphire Blocks
 		{
-			AnimationComponent sapphireAnimation = new AnimationComponent();
-			sapphireAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
-					textureAtlas, "Block-Sapphire", 0, 0, 0);
-			sapphireAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
-					textureAtlas, "Block-Sapphire", 0, 0, 0);
-			sapphireAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
-					textureAtlas, "Block-Sapphire", 0, 0, 0);
-			sapphireAnimation.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
-					textureAtlas, "Block-Sapphire", 0, 0, 0);
+			AnimationComponent sapphireAnimation = loadBlockAnimation(textureAtlas, "Block-Sapphire");
 
-			Entity sapphire = new Entity();
-			sapphire.attach(new PositionComponent(new Vector2(3f, 3f)));
-			sapphire.attach(new CollisionComponent(new Rectangle(0f, 0f, blockSize.x, blockSize.y)));
-			sapphire.attach(new IdleComponent());
-			sapphire.attach(sapphireAnimation);
-			sapphire.attach(new DrawableComponent(sapphireAnimation.get(SpriteEntitySystem.SpriteStatus.IDLE.name()
-					+ SpriteEntitySystem.SpriteDirection.DOWN.name()), blockSize.x, blockSize.y));
-			entityManager.add(sapphire);
+			for (float i = 0f; i < 7f; i += .5f) {
+				Entity sapphire = createBlockEntity(new Vector2(0f, i), sapphireAnimation);
+				entityManager.add(sapphire);
+			}
 		}
+	}
+
+	private AnimationComponent loadBlockAnimation(TextureAtlas textureAtlas, String regionName) {
+		AnimationComponent animation = new AnimationComponent();
+		animation.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
+				textureAtlas, regionName, 0, 0, 0);
+		animation.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
+				textureAtlas, regionName, 0, 0, 0);
+		animation.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
+				textureAtlas, regionName, 0, 0, 0);
+		animation.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
+				textureAtlas, regionName, 0, 0, 0);
+
+		return animation;
+	}
+
+	private Entity createBlockEntity(Vector2 position, AnimationComponent animationComponent) {
+		Entity block = new Entity();
+		block.attach(new PositionComponent(position));
+		block.attach(new CollisionComponent(new Rectangle(0f, 0f, BLOCK_SIZE.x, BLOCK_SIZE.y)));
+		block.attach(new IdleComponent());
+		block.attach(animationComponent);
+		block.attach(new DrawableComponent(animationComponent.get(SpriteEntitySystem.SpriteStatus.IDLE.name()
+				+ SpriteEntitySystem.SpriteDirection.DOWN.name()), BLOCK_SIZE.x, BLOCK_SIZE.y));
+
+		return block;
 	}
 }
