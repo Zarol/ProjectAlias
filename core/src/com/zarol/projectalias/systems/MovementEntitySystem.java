@@ -123,10 +123,14 @@ public class MovementEntitySystem extends EntitySystem {
 				continue;
 			}
 
-			if (dxCollision.overlaps(colliableEntity.get(CollisionComponent.class).getBounds())) {
+			if (dxCollision.overlaps(colliableEntity.get(CollisionComponent.class).getBounds()) &&
+					!colliableEntity.has(ScorableComponent.class)) {
 				velocity.x = 0;
 				position.x -= velocity.x * delta;
 				break;
+			} else if (dxCollision.overlaps(colliableEntity.get(CollisionComponent.class).getBounds()) &&
+					colliableEntity.has(ScorableComponent.class)) {
+				entityManager.remove(colliableEntity);
 			}
 		}
 		dxCollision.x = position.x;
@@ -137,10 +141,14 @@ public class MovementEntitySystem extends EntitySystem {
 				continue;
 			}
 
-			if (dxCollision.overlaps(colliableEntity.get(CollisionComponent.class).getBounds())) {
+			if (dxCollision.overlaps(colliableEntity.get(CollisionComponent.class).getBounds()) &&
+					!colliableEntity.has(ScorableComponent.class)) {
 				velocity.y = 0;
 				position.y -= velocity.y * delta;
 				break;
+			} else if (dxCollision.overlaps(colliableEntity.get(CollisionComponent.class).getBounds()) &&
+					colliableEntity.has(ScorableComponent.class)) {
+				entityManager.remove(colliableEntity);
 			}
 		}
 		dxCollision.y = position.y;

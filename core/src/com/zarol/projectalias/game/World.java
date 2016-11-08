@@ -65,72 +65,78 @@ public class World {
 
 		TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("images/textures/textures.atlas"));
 
-		//Create player
-		{
-			Entity player = new Entity();
-			player.attach(new AccelerationComponent(new Vector2(1000f, 1000f)));
-			player.attach(new VelocityComponent(new Vector2(3f, 3f), new Vector2(0f, 0f), new Vector2(1f, 1f)));
-			player.attach(new PositionComponent(new Vector2(5f, 3.5f)));
-			player.attach(new CollisionComponent(new Rectangle(0f, 0f, PLAYER_SIZE.x, PLAYER_SIZE.y)));
-			player.attach(new PlayerControlledComponent());
-			AnimationComponent animationComponent = new AnimationComponent();
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
-					textureAtlas, "Astronaut-Up", 0, 0, 0);
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
-					textureAtlas, "Astronaut-Down", 0, 0, 0);
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
-					textureAtlas, "Astronaut-Left", 0, 0, 0);
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
-					textureAtlas, "Astronaut-Right", 0, 0, 0);
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
-					textureAtlas, "Astronaut-Up", 0, 0, 0);
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
-					textureAtlas, "Astronaut-Down", 0, 0, 0);
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
-					textureAtlas, "Astronaut-Left", 0, 8, .06f);
-			animationComponent.loadAnimation(
-					SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
-					textureAtlas, "Astronaut-Right", 0, 8, .06f);
-			player.attach(animationComponent);
-			player.attach(new DrawableComponent(
-					animationComponent.get(SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name()),
-					PLAYER_SIZE.x, PLAYER_SIZE.y));
-			entityManager.add(player);
-		}
-
 		AnimationComponent emeraldAnimation = loadBlockAnimation(textureAtlas, "Block-Emerald");
 		AnimationComponent goldAnimation = loadBlockAnimation(textureAtlas, "Block-Gold");
 		AnimationComponent rubyAnimation = loadBlockAnimation(textureAtlas, "Block-Ruby");
 		AnimationComponent sapphireAnimation = loadBlockAnimation(textureAtlas, "Block-Sapphire");
-		for (int x = 0; x < Level1.level.length; x ++ ) {
-			for (int y = 0; y < Level1.level[0].length; y ++ ) {
-				Entity block = null;
+		AnimationComponent pelletAnimation = loadBlockAnimation(textureAtlas, "Pellet");
+		for (int x = 0; x < Level1.level.length; x++) {
+			for (int y = 0; y < Level1.level[0].length; y++) {
+				Entity entity = null;
 				switch (Level1.level[x][y]) {
 					case 'e':
-						block = createBlockEntity(new Vector2(y*.5f,x*.5f), emeraldAnimation);
+						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), emeraldAnimation);
 						break;
 					case 'g':
-						block = createBlockEntity(new Vector2(y*.5f,x*.5f), goldAnimation);
+						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), goldAnimation);
 						break;
 					case 'r':
-						block = createBlockEntity(new Vector2(y*.5f,x*.5f), rubyAnimation);
+						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), rubyAnimation);
 						break;
 					case 's':
-						block = createBlockEntity(new Vector2(y*.5f,x*.5f), sapphireAnimation);
+						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), sapphireAnimation);
 						break;
+					case 'p':
+						entity = createPlayerEntity(textureAtlas, new Vector2(x * .5f, y * .5f));
+						break;
+					case ' ':
+						entity = createPelletEntity(new Vector2(x * .5f + .15f, y * .5f + .15f), pelletAnimation);
 				}
-				if (block != null) {
-					entityManager.add(block);
+				if (entity != null) {
+					entityManager.add(entity);
 				}
 			}
 		}
+	}
+
+	private Entity createPlayerEntity(TextureAtlas textureAtlas, Vector2 position) {
+		Entity player = new Entity();
+		player.attach(new AccelerationComponent(new Vector2(1000f, 1000f)));
+		player.attach(new VelocityComponent(new Vector2(3f, 3f), new Vector2(0f, 0f), new Vector2(1f, 1f)));
+		player.attach(new PositionComponent(new Vector2(position)));
+		player.attach(new CollisionComponent(new Rectangle(0f, 0f, PLAYER_SIZE.x, PLAYER_SIZE.y)));
+		player.attach(new PlayerControlledComponent());
+		AnimationComponent animationComponent = new AnimationComponent();
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
+				textureAtlas, "Astronaut-Up", 0, 0, 0);
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
+				textureAtlas, "Astronaut-Down", 0, 0, 0);
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
+				textureAtlas, "Astronaut-Left", 0, 0, 0);
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
+				textureAtlas, "Astronaut-Right", 0, 0, 0);
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.UP.name(),
+				textureAtlas, "Astronaut-Up", 0, 0, 0);
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.DOWN.name(),
+				textureAtlas, "Astronaut-Down", 0, 0, 0);
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.LEFT.name(),
+				textureAtlas, "Astronaut-Left", 0, 8, .06f);
+		animationComponent.loadAnimation(
+				SpriteEntitySystem.SpriteStatus.WALK.name() + SpriteEntitySystem.SpriteDirection.RIGHT.name(),
+				textureAtlas, "Astronaut-Right", 0, 8, .06f);
+		player.attach(animationComponent);
+		player.attach(new DrawableComponent(
+				animationComponent.get(SpriteEntitySystem.SpriteStatus.IDLE.name() + SpriteEntitySystem.SpriteDirection.DOWN.name()),
+				PLAYER_SIZE.x, PLAYER_SIZE.y));
+
+		return player;
 	}
 
 	private AnimationComponent loadBlockAnimation(TextureAtlas textureAtlas, String regionName) {
@@ -161,5 +167,18 @@ public class World {
 				+ SpriteEntitySystem.SpriteDirection.DOWN.name()), BLOCK_SIZE.x, BLOCK_SIZE.y));
 
 		return block;
+	}
+
+	private Entity createPelletEntity(Vector2 position, AnimationComponent animationComponent) {
+		Entity pellet = new Entity();
+		pellet.attach(new PositionComponent(new Vector2(position.x, position.y)));
+		pellet.attach(new CollisionComponent(new Rectangle(0f, 0f, BLOCK_SIZE.x / 3, BLOCK_SIZE.y / 3)));
+		pellet.attach(new IdleComponent());
+		pellet.attach(new ScorableComponent());
+		pellet.attach(animationComponent);
+		pellet.attach(new DrawableComponent(animationComponent.get(SpriteEntitySystem.SpriteStatus.IDLE.name()
+				+ SpriteEntitySystem.SpriteDirection.DOWN.name()), BLOCK_SIZE.x / 3, BLOCK_SIZE.y / 3));
+
+		return pellet;
 	}
 }

@@ -6,169 +6,176 @@ filter: Nearest,Nearest
 repeat: none
 Astronaut-Down
   rotate: false
-  xy: 2, 2
+  xy: 2, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 Astronaut-Left
   rotate: false
-  xy: 36, 2
+  xy: 36, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 Astronaut-Left
   rotate: false
-  xy: 70, 2
+  xy: 70, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 Astronaut-Left
   rotate: false
-  xy: 104, 2
+  xy: 104, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 Astronaut-Left
   rotate: false
-  xy: 138, 2
+  xy: 138, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 Astronaut-Left
   rotate: false
-  xy: 138, 2
+  xy: 138, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 Astronaut-Left
   rotate: false
-  xy: 172, 2
+  xy: 172, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 Astronaut-Left
   rotate: false
-  xy: 206, 2
+  xy: 206, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 Astronaut-Left
   rotate: false
-  xy: 240, 2
+  xy: 240, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 Astronaut-Left
   rotate: false
-  xy: 274, 2
+  xy: 274, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 8
 Astronaut-Right
   rotate: false
-  xy: 308, 2
+  xy: 308, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 Astronaut-Right
   rotate: false
-  xy: 342, 2
+  xy: 342, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 Astronaut-Right
   rotate: false
-  xy: 376, 2
+  xy: 376, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 Astronaut-Right
   rotate: false
-  xy: 410, 2
+  xy: 410, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 Astronaut-Right
   rotate: false
-  xy: 410, 2
+  xy: 410, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 Astronaut-Right
   rotate: false
-  xy: 444, 2
+  xy: 444, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 Astronaut-Right
   rotate: false
-  xy: 478, 2
+  xy: 478, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 Astronaut-Right
   rotate: false
-  xy: 512, 2
+  xy: 512, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 Astronaut-Right
   rotate: false
-  xy: 546, 2
+  xy: 546, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 8
 Astronaut-Up
   rotate: false
-  xy: 580, 2
+  xy: 580, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 Block-Emerald
   rotate: false
-  xy: 614, 2
+  xy: 614, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 Block-Gold
   rotate: false
-  xy: 648, 2
+  xy: 648, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 Block-Ruby
   rotate: false
-  xy: 682, 2
+  xy: 682, 20
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 Block-Sapphire
   rotate: false
-  xy: 716, 2
+  xy: 716, 20
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: 0
+Pellet
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: 0
