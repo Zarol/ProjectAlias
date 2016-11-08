@@ -14,8 +14,8 @@ import com.zarol.projectalias.framework.Entity;
 import com.zarol.projectalias.framework.EntityManager;
 
 public class WorldRenderer {
-	private static final float CAMERA_WIDTH = 7.5f;
-	private static final float CAMERA_HEIGHT = 10.5f;
+	private static final float CAMERA_WIDTH = 9f;
+	private static final float CAMERA_HEIGHT = 16f;
 
 	private EntityManager entityManager;
 	private OrthographicCamera cam;
