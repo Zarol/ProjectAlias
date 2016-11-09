@@ -14,8 +14,8 @@ import com.zarol.projectalias.framework.Entity;
 import com.zarol.projectalias.framework.EntityManager;
 
 public class WorldRenderer {
-	private static final float CAMERA_WIDTH = 9f;
-	private static final float CAMERA_HEIGHT = 16f;
+	private static final float CAMERA_WIDTH = 9.5f;
+	private static final float CAMERA_HEIGHT = 16.5f;
 
 	private EntityManager entityManager;
 	private OrthographicCamera cam;
@@ -24,8 +24,6 @@ public class WorldRenderer {
 
 	private SpriteBatch spriteBatch;
 	private boolean debug = false;
-	private int width;
-	private int height;
 
 	public WorldRenderer(EntityManager entityManager, boolean debug) {
 		this.entityManager = entityManager;
@@ -42,11 +40,6 @@ public class WorldRenderer {
 
 	public void setDebug(boolean debug) {
 		this.debug = debug;
-	}
-
-	public void setSize(int width, int height) {
-		this.width = width;
-		this.height = height;
 	}
 
 	public void render() {

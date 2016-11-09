@@ -17,8 +17,6 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 	private World world;
 	private WorldRenderer worldRenderer;
 
-	private int width, height;
-
 	@Override
 	public void show() {
 		entityManager = new EntityManager();
@@ -40,9 +38,6 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
 	@Override
 	public void resize(int width, int height) {
-		this.width = width;
-		this.height = height;
-		worldRenderer.setSize(this.width, this.height);
 	}
 
 	@Override

@@ -24,8 +24,8 @@ public class World {
 	private EventManager eventManager;
 	private List<EntitySystem> systemsList;
 
-	private static final Vector2 BLOCK_SIZE = new Vector2(.45f, .45f);
-	private static final Vector2 PLAYER_SIZE = new Vector2(.5f, .5f);
+	private static final Vector2 BLOCK_SIZE = new Vector2(.5f, .5f);
+	private static final Vector2 PLAYER_SIZE = new Vector2(.45f, .45f);
 
 	public World(EntityManager entityManager, EventManager eventManager) {
 		this.entityManager = entityManager;
@@ -75,22 +75,22 @@ public class World {
 				Entity entity = null;
 				switch (Level1.level[x][y]) {
 					case 'e':
-						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), emeraldAnimation);
+						entity = createBlockEntity(new Vector2(y * .5f, x * .5f), emeraldAnimation);
 						break;
 					case 'g':
-						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), goldAnimation);
+						entity = createBlockEntity(new Vector2(y * .5f, x * .5f), goldAnimation);
 						break;
 					case 'r':
-						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), rubyAnimation);
+						entity = createBlockEntity(new Vector2(y * .5f, x * .5f), rubyAnimation);
 						break;
 					case 's':
-						entity = createBlockEntity(new Vector2(x * .5f, y * .5f), sapphireAnimation);
+						entity = createBlockEntity(new Vector2(y * .5f, x * .5f), sapphireAnimation);
 						break;
 					case 'p':
-						entity = createPlayerEntity(textureAtlas, new Vector2(x * .5f, y * .5f));
+						entity = createPlayerEntity(textureAtlas, new Vector2(y * .5f, x * .5f));
 						break;
 					case ' ':
-						entity = createPelletEntity(new Vector2(x * .5f + .15f, y * .5f + .15f), pelletAnimation);
+						entity = createPelletEntity(new Vector2(y * .5f + .20f, x * .5f + .20f), pelletAnimation);
 				}
 				if (entity != null) {
 					entityManager.add(entity);
@@ -172,12 +172,12 @@ public class World {
 	private Entity createPelletEntity(Vector2 position, AnimationComponent animationComponent) {
 		Entity pellet = new Entity();
 		pellet.attach(new PositionComponent(new Vector2(position.x, position.y)));
-		pellet.attach(new CollisionComponent(new Rectangle(0f, 0f, BLOCK_SIZE.x / 3, BLOCK_SIZE.y / 3)));
+		pellet.attach(new CollisionComponent(new Rectangle(0f, 0f, BLOCK_SIZE.x / 6, BLOCK_SIZE.y / 6)));
 		pellet.attach(new IdleComponent());
 		pellet.attach(new ScorableComponent());
 		pellet.attach(animationComponent);
 		pellet.attach(new DrawableComponent(animationComponent.get(SpriteEntitySystem.SpriteStatus.IDLE.name()
-				+ SpriteEntitySystem.SpriteDirection.DOWN.name()), BLOCK_SIZE.x / 3, BLOCK_SIZE.y / 3));
+				+ SpriteEntitySystem.SpriteDirection.DOWN.name()), BLOCK_SIZE.x / 6, BLOCK_SIZE.y / 6));
 
 		return pellet;
 	}
