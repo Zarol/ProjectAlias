@@ -25,7 +25,7 @@ public class World {
 	private List<EntitySystem> systemsList;
 
 	private static final Vector2 BLOCK_SIZE = new Vector2(.5f, .5f);
-	private static final Vector2 PLAYER_SIZE = new Vector2(.45f, .45f);
+	private static final Vector2 PLAYER_SIZE = new Vector2(.30f, .30f);
 
 	public World(EntityManager entityManager, EventManager eventManager) {
 		this.entityManager = entityManager;
